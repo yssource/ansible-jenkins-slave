@@ -1,5 +1,5 @@
 ---
-dependencies: []
+dependencies:
   - { role: albanandrieu.ansible_common }
 #  - { role: geerlingguy.git }
 #  - { role: albanandrieu.cpp }
