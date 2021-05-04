@@ -1,5 +1,6 @@
 ---
-ansigenome_info:
+
+ansigenome_info: # noqa 701
   galaxy_id: '1998'
   galaxy_url: 'https://galaxy.ansible.com/alban.andrieu/jenkins-slave/'
   galaxy_user: 'alban.andrieu'
