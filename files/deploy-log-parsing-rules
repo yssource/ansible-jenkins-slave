@@ -53,6 +53,9 @@ error /404 Client Error: Not Found/
 error /Error response from daemon: No such image:/
 error /invalid config registry="None"/
 warning /unhealthy/
+# docker-bench-security
+warning /No such object: tender_merkle/
+warning /No such object: zen_wilson/
 
 #javascript uncss
 ok /npm WARN optional SKIPPING OPTIONAL DEPENDENCY:/
