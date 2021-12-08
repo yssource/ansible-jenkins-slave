@@ -32,6 +32,10 @@ warning /Error requesting archive./
 warning /Error extracting archive/
 warning /tar: Error is not recoverable: exiting now/
 
+#jenkins
+warning /ERROR: Specified HTML directory/
+warning /ERROR: The container started but didn't run the expected command./
+
 #git
 warning /gitconfig': No such file or directory/
 warning /ERROR: Workspace has a .git repository, but it appears to be corrupt/
@@ -52,6 +56,7 @@ warning /Error response from daemon:/
 error /404 Client Error: Not Found/
 error /Error response from daemon: No such image:/
 error /invalid config registry="None"/
+error /toomanyrequests: You have reached your pull rate limit. You may increase the limit by authenticating and upgrading/
 warning /unhealthy/
 # docker-bench-security
 warning /No such object: tender_merkle/
@@ -203,10 +208,6 @@ warning /Error: Could not load script:/
 
 error /An error occured while updating fs:/
 
-#Docker
-error /invalid config registry="None"/
-warning /unhealthy/
-
 #ansible
 ok /^Searching for Suckit rootkit/
 error /INFECTED/
@@ -223,6 +224,9 @@ error /failed=[1-9]+/
 #error /The error appears to have been in/
 #Below for inventory ansible-cmdb
 error /Whoops, it looks like something went wrong while rendering the template/
+# Below is when I do trap failure in shell scripts
+ok /failed with exit code/
+ok /cannot find ansible/
 
 #sonar
 ok /ERROR: Unable to parse xml file:/

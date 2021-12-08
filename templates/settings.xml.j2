@@ -109,7 +109,7 @@ under the License.
     </proxy>
     <proxy>
       <id>squid-proxy</id>
-      <active>true</active>
+      <active>{{ nexus_proxy_active }}</active>
       <protocol>{{ http_proxy_protocol }}</protocol>
       <host>{{ http_proxy_host }}</host>
       <port>{{ http_proxy_port }}</port>
@@ -177,14 +177,14 @@ under the License.
 
     <server>
       <id>local-nexus</id>
-      <username>admin</username>
-      <password>admin123</password>
+      <username>>{{ nexus_settings_release_username }}</username>
+      <password>{{ nexus_settings_release_password }}</password>
     </server>
 
     <server>
       <id>nexus-releases</id>
-      <username>admin</username>
-      <password>admin123</password>
+      <username>{{ nexus_settings_release_username }}</username>
+      <password>{{ nexus_settings_release_password }}</password>
       <!-- used for Nexus Staging in Jenkins -->
       <configuration>
         <httpHeaders>
@@ -248,7 +248,7 @@ under the License.
 
     <mirror>
       <id>nexus</id>
-      <url>http://nexus/</url>
+      <url>{ nexus_mirror_url }}/nexus/content/groups/public/</url>
       <mirrorOf>*,!sonar</mirrorOf>
       <name>Central maven repository</name>
     </mirror>
@@ -881,6 +881,31 @@ under the License.
 			</pluginRepository>
 		  </pluginRepositories>
 		</profile>
+    {% if nexus_settings_signing_enable is defined %}
+    <profile>
+        <id>signing</id>
+        <activation>
+          <activeByDefault>{{ nexus_settings_signing_active }}</activeByDefault>
+        </activation>
+        <properties>
+            <env.STOREPASS>{{ nexus_settings_signing_storepass }}</env.STOREPASS>
+            <env.KEYSTORE>../../Tool/{{ nexus_settings_signing_keystore }}</env.KEYSTORE>
+            <env.ALIAS>{{ nexus_settings_signing_alias }}</env.ALIAS>
+        </properties>
+    </profile>
+    {% endif %}
+    {% if nexus_settings_sonar_enable is defined %}
+    <profile>
+        <id>sonar</id>
+        <activation>
+          <activeByDefault>{{ nexus_settings_sonar_active }}</activeByDefault>
+        </activation>
+        <properties>
+            <sonar.host.url>{{ nexus_settings_sonar_url }}</sonar.host.url>
+            <sonar.login>{{ nexus_settings_sonar_login }}</sonar.login>
+        </properties>
+    </profile>
+    {% endif %}
   </profiles>
 
   <!-- activeProfiles

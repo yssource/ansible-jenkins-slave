@@ -2,10 +2,15 @@
 ; loglevel=verbose
 cache=.node_cache
 tmp=.node_tmp
+{% if npm_chromedriver_version is defined %}
 chromedriver_version={{ npm_chromedriver_version }}
-{% if npm_nexus_private_npm_ca is defined %}
-ca={{ npm_nexus_private_npm_ca }}
 {% endif %}
+{% if npm_email is defined %}
+email={{ npm_email }}
+{% endif %}
+{% for npmca_entry in npm_nexus_private_npm_ca %}
+ca={{ npmca_entry }}
+{% endfor %}
 {% if npm_nexus_private_npm_url is defined %}
 registry={{ npm_nexus_private_npm_url }}
 {% endif %}
@@ -27,6 +32,7 @@ slimerjs_cdnurl={{ npm_slimerjs_cdnurl }}
 {% if npm_proxy is defined %}
 proxy={{ npm_proxy }}
 https-proxy={{ npm_proxy }}
-noproxy[]=nabla.mobi
-noproxy[]=albandrieu.com
+{% endif %}
+{% if npm_noproxy is defined %}
+noproxy={{ npm_noproxy }}
 {% endif %}

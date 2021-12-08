@@ -33,6 +33,11 @@
 - name: Install ant package
   action: "{{ ansible_pkg_mgr }} name='ant' state={{ util_pkg_state | default('present') }} update_cache=yes"
   become: true
+  #ignore_errors: true
+  tags:
+    - package
+    - ant
+    - vm
 
 - name: Install zip package
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=yes"
@@ -49,13 +54,17 @@
 
 - name: jenkins-slave | Install flex
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=yes"
-  tags: package
   with_items:
     - flex
 # when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
 # when: (ansible_distribution == 'MacOSX' or ansible_distribution == 'FreeBSD')
 # when: (ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat')
   become: true
+  ignore_errors: true
+  tags:
+    - package
+    - flex
+    - vm
 
 - name: jenkins-slave | Install tools needed by grunt-zaproxy html report
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=yes"
@@ -84,6 +93,9 @@
 #   become: true
 
 - import_tasks: docker.yml
+  tags:
+    - docker
+    - vm
 
 - import_tasks: user.yml
 

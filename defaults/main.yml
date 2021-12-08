@@ -75,6 +75,19 @@ jenkins_remote_thinbackup: "/backup/thinBackup"
 
 home_url: "http://localhost"
 nexus_url: "{{ home_url }}:8081"
+nexus_mirror_url: "{{ nexus_url }}"
+nexus_deploy_url: "{{ nexus_url }}"
+nexus_settings_signing_enable: false
+nexus_settings_signing_active: false
+nexus_settings_signing_storepass: ""
+nexus_settings_signing_keystore: ""
+nexus_settings_signing_alias: "test"
+nexus_settings_sonar_enable: false
+nexus_settings_sonar_active: false
+nexus_settings_sonar_url: ""
+nexus_settings_sonar_login: ""
+nexus_settings_sonar_pdf_password: "admin"
+nexus_proxy_active: false
 nexus_non_proxy: "albandrieu.com|nabla.mobi"
 http_proxy_host: "192.168.1.57"
 http_proxy_port: "3128"
@@ -84,6 +97,7 @@ https_proxy: "{{ http_proxy }}"
 
 # npm_nexus_npm_url: "{{ nexus_url }}/nexus/content/npm/registry.npmjs.org/"
 npm_nexus_npm_url:
+npm_config_enabled: true
 npm_nexus_private_npm_url: "http://registry.npmjs.org/"
 npm_nexus_private_npm_ca:
 npm_nexus_private_npm_data: []
@@ -93,18 +107,21 @@ npm_slimerjs_cdnurl: ""
 npm_strict_ssl: "false"
 
 npm_prefix: ""           # "/usr/local/bin" or "/usr/bin"
+npm_noproxy: "albandrieu.com,nabla.mobi"
 npm_proxy:    # "{{ http_proxy }}"
+npm_email:
 # Define a list of global packages to be installed with NPM.
 npm_global_packages:
 #  - analyze-css@0.10.2
   - angular@1.3.15
-  - bower@1.8.8
+  - bower@1.8.12
   - casperjs@1.1.4
   - coffee-script@1.10.0
   - connect@1.9.2
   - eslint@6.8.0
-  - gifsicle@4.0.1 # NOK 5.2.0 node v12.16.1 Warning: Couldn't load default plugin "gifsicle"
-  - grunt-cli@1.3.2
+#  - gifsicle@4.0.1 # NOK 5.2.0 node v12.16.1 Warning: Couldn't load default plugin "gifsicle"
+  - grunt@1.4.1
+  - grunt-cli@1.4.3
   - jshint@2.9.5
   - jsonlint@1.6.2
   - json2csv@4.3.3
@@ -116,12 +133,13 @@ npm_global_packages:
   - tap-eater@0.0.3
   - webdriver-manager@12.1.7
   - yarn@1.19.1
-  - yo@3.1.1
+  - yo@latest
   - shrinkwrap@0.4.0
   - newman@4.5.5
   - xunit-viewer@5.1.11
   - dockerfile_lint@0.3.3
   - grunt-retire@1.0.8  # security tool
+  - bower-nexus3-resolver@1.0.2   # 1.0.4 buggy with directory bower_components
 #  - grunt@1.0.4
 #  - grunt-version-check@0.3.8
 #  - karma@4.0.1
@@ -177,6 +195,7 @@ homebrew_home_check_path: "{{ lookup('env','HOME') }}/.linuxbrew"
 homebrew_check_path: "{{ homebrew_home_check_path }}/bin/brew"
 
 # maven_
+maven_config_enabled: true
 # maven_repository: "{{ jenkins_slave_home }}/repository"
 maven_repository: "/usr/share/maven-repo"
 # TODO sudo chmod 755 -R /usr/share/maven-repo
@@ -190,6 +209,7 @@ bower_registry_url: "{{ bower_url }}"
 bower_register_url: "{{ bower_url }}"
 bower_publish_url: "{{ bower_url }}"
 bower_proxy:    # "{{ http_proxy }}"
+bower_noproxy: "localhost,127.0.0.1,{{ home_url }}"
 
 shell_git_configure_enabled: true         # Enable git configuration
 shell_git: []
@@ -219,7 +239,7 @@ epel_repo_enabled: false
 python_enabled: true
 #The last command is to upgrade to the latest supported version. For Python 2.7 the latest supported is currently pip 20.3.4.
 python2_pip_version: "20.2.4" # "pip < 21.0"
-python3_default_version: "3.7"
+python3_default_version: "3.8"
 python3_pip_version: "20.2.4"
 
 database_docker_oradata: "/opt/oracle/oradata"
@@ -240,7 +260,7 @@ proxy_repo_server: "localhost"
 proxy_repo_url: "http://{{ proxy_repo_server }}:3142"
 
 docker_opts_dns_1: 8.8.8.8
-docker_opts_dns_2:
+docker_opts_dns_2: 4.4.4.4
 docker_opts_dns_search: misys.global.ad
 
 docker_py_version: "1.9.0"
@@ -283,7 +303,7 @@ sonar_scanner_target_dir: "{{ sonar_target_dir }}sonar-runner"
 jenkins_customtools_target_dir: "/workspace/slave/tools/com.cloudbees.jenkins.plugins.customtools.CustomTool"
 
 # See https://github.com/zaproxy/zaproxy/releases/download/v2.8.0/ZAP_2.8.0_Core.zip
-zap_version: "2.8.0"
+zap_version: "2.10.0"
 zap_name: "ZAP_{{ zap_version }}_Core"
 zap_download_file: "{{ zap_name }}.zip"
 zap_download_url: "https://github.com/zaproxy/zaproxy/releases/download/v{{ zap_version }}/{{ zap_download_file }}"

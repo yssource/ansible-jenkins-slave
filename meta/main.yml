@@ -3,7 +3,7 @@ dependencies:
   - { role: albanandrieu.ansible_common }
 #  - { role: geerlingguy.git }
 #  - { role: albanandrieu.cpp }
-  - { role: albanandrieu.xvbf }
+#  - { role: albanandrieu.xvbf }
   - { role: albanandrieu.selenium }
 #  - { role: maven }
 #  - { role: chrome }
