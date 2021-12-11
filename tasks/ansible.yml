@@ -1,7 +1,7 @@
 ---
 
-- name: jenkins-slave | Set python link to python version
-  set_fact: python_version=3.7
+#- name: jenkins-slave | Set python link to python version
+#  set_fact: python3_default_version=3.7
 
 - name: jenkins-slave | Fail if using python3 with Ansible<2.3
   fail:
@@ -30,7 +30,7 @@
 # - name: jenkins-slave | Install Ansible (Debian based)
 #   pip:
 #     name: "{{ item }}"
-#     executable: "pip{{ python_version }}"
+#     executable: "pip{{ python3_default_version }}"
 #   with_items:
 #     - paramiko==2.6.0
 #     - ansible==2.8.6
@@ -45,7 +45,7 @@
 # - name: jenkins-slave | Install Ansible add ons (Debian based)
 #   pip:
 #     name: "{{ item }}"
-#     executable: "pip{{ python_version }}"
+#     executable: "pip{{ python3_default_version }}"
 #   with_items:
 #     - ansible-cmdb==1.30
 #   when: not (ansible_distribution == 'RedHat' and ansible_distribution_major_version == '6')
@@ -76,7 +76,7 @@
 # - name: jenkins-slave | Install devops tools for ansible windows
 #   pip:
 #     name: "{{ item }}"
-#     executable: "pip{{ python_version }}"
+#     executable: "pip{{ python3_default_version }}"
 #   with_items:
 #     - "pywinrm>=0.2.2"
 #   when: not (ansible_distribution == 'RedHat' and ansible_distribution_major_version == '6')
@@ -88,7 +88,7 @@
 - name: jenkins-slave | Install devops tools for ansible accelerate mode
   pip:
     name: "{{ item }}"
-    executable: "pip{{ python_version }}"
+    executable: "pip{{ python3_default_version }}"
   with_items:
     - python-keyczar
   become: true

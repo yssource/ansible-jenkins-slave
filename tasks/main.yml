@@ -21,14 +21,25 @@
 #- import_tasks: hdd.yml
 
 - import_tasks: java.yml
+  tags:
+    - package
+    - java
 
 - import_tasks: maven.yml
+  tags:
+    - package
+    - maven
 
 - import_tasks: python.yml
+  tags:
+    - package
+    - python
 
 # FYI ansible.yml need python.yml
 - import_tasks: ansible.yml
   when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_distribution_version not in ['12.04', '14.04']
+  tags:
+    - vm
 
 - name: Install ant package
   action: "{{ ansible_pkg_mgr }} name='ant' state={{ util_pkg_state | default('present') }} update_cache=yes"
@@ -98,6 +109,8 @@
     - vm
 
 - import_tasks: user.yml
+  tags:
+    - user
 
 - import_tasks: brew.yml
   when: brew_enabled
@@ -105,12 +118,18 @@
     - brew
 
 - import_tasks: security.yml
+  tags:
+    - security
 
 - import_tasks: zap.yml
+  tags:
+    - zap
 
 # - import_tasks: gcc.yml
 
 - import_tasks: cpp.yml
+  tags:
+    - cpp
 
 - import_tasks: objc.yml
   tags:
@@ -119,10 +138,14 @@
 #- import_tasks: scons.yml
 
 - import_tasks: perl.yml
+  tags:
+    - perl
 
 - import_tasks: shell.yml
 
 - import_tasks: git.yml
+  tags:
+    - git
 
 - name: jenkins-slave | Copy the deploy-log-parsing-rules for jenkins log parsing configuration
   copy: src=deploy-log-parsing-rules dest={{ jenkins_home }}/deploy-log-parsing-rules backup=yes owner={{ jenkins_user }} group={{ jenkins_group }}
@@ -132,26 +155,6 @@
   copy: src=groovy-html-main.template dest={{ jenkins_home }}/email-templates/groovy-html-cut.template backup=yes owner={{ jenkins_user }} group={{ jenkins_group }}
   become: true
   ignore_errors: true
-
-- name: jenkins-slave | Create .m2 folder
-  file: path={{ jenkins_home }}/.m2 state=directory owner={{ jenkins_user }} group={{ jenkins_group }} mode=0775
-  become: true
-  changed_when: false
-
-- name: jenkins-slave | Copy maven toolchains configuration
-  copy: src=toolchains.xml dest={{ jenkins_home }}/.m2/toolchains.xml backup=yes owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755
-  changed_when: false
-  become: true
-
-- name: jenkins-slave | Copy maven configuration
-  template: src=settings.xml.j2 dest={{ jenkins_home }}/.m2/settings.xml backup=yes owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755
-  become: true
-  changed_when: false
-
-- name: jenkins-slave | Copy maven security configuration
-  template: src=settings-security.xml.j2 dest={{ jenkins_home }}/.m2/settings-security.xml backup=yes owner={{ jenkins_user }} group={{ jenkins_group }} mode=0755
-  become: true
-  changed_when: false
 
 - name: jenkins-slave | Set limits
   lineinfile: dest=/etc/security/limits.conf line="{{ item.key }}" regexp="{{ item.value }}"
@@ -236,34 +239,47 @@
 
 #- import_tasks: nodejs.yml
 
-- name: javascript | Install compass (Debian based)
-  action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=yes"
-  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and (ansible_distribution_version not in ['12.04','13.04','14.04']) and nodejs_enabled
-  with_items:
-    - ruby-compass
-  become: true
-#  ignore_errors: true
-
 - import_tasks: yarn.yml
 
 - name: jenkins-slave | Copy the .npmrc script
   template: src=.npmrc.j2 dest={{ jenkins_home }}/.npmrc owner={{ jenkins_user }} group={{ jenkins_group }} mode=0644
+  when: npm_config_enabled
   become: true
   changed_when: false
+  tags:
+    - npm
+    - config
+    - npmrc
+    - vm # do not install on docker image
 
 - import_tasks: bower.yml
+  tags:
+    - bower
+    - npm
 
 - import_tasks: tmp.yml
+  tags:
+    - tmp
+    - vm
 
 # TODO Add source /etc/profile for RedHat to find lsof command
 
 # - import_tasks: browser.yml
 
 - import_tasks: selenium.yml
+  tags:
+    - test
+    - selenium
 
 - import_tasks: flash.yml
+  tags:
+    - flash
+    - vm
 
 - import_tasks: zabbix.yml
+  tags:
+    - monitoring
+    - zabbix
 
 - import_tasks: debug.yml
   when: workstation_enabled
@@ -369,5 +385,13 @@
     - vm # do not install on docker image
 
 - import_tasks: k8s.yml
+  tags:
+    - cloud
+    - kubernetes
+    - k8s
 
 - import_tasks: molecule.yml
+  tags:
+    - test
+    - ansible
+    - molecule
