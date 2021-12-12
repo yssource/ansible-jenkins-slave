@@ -158,9 +158,12 @@
     - clang-tools  # clang-tools-10
     - clang-tidy
   when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
-  tags: cpp
   become: true
   #ignore_errors: true
+  tags:
+   - package
+   - cpp
+   - clang
 
 - name: cpp | Install C++ clang llvm dev
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=true"
@@ -170,10 +173,13 @@
 #    - llvm-3.8-dev
     - llvm-dev
 # - clang-devel
-  tags: cpp
   #when: not ((ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat') and ansible_distribution_major_version == '6')
   become: true
   ignore_errors: true
+  tags:
+   - package
+   - cpp
+   - clang
 
 - name: cpp | Install C++ quality tool
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=true"
@@ -182,11 +188,23 @@
     - valgrind
     - gawk
     - kcachegrind
-    - valkyrie
   when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
-  tags: cpp
   become: true
   ignore_errors: true
+  tags:
+   - package
+   - cpp
+
+- name: cpp | Install C++ quality tool
+  action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=true"
+  with_items:
+    - valkyrie
+  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
+  become: true
+  ignore_errors: true
+  tags:
+   - package
+   - cpp
 
 - name: cpp | Install C++ quality tool
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=true"
@@ -195,9 +213,12 @@
     - flawfinder
     - ggcov
   when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu')
-  tags: cpp
   become: true
   ignore_errors: true
+  tags:
+   - package
+   - cpp
+   - debug
 
 - name: cpp | Install C++ quality tool
   action: "{{ ansible_pkg_mgr }} name={{ item }} state={{ util_pkg_state | default('present') }} update_cache=true"

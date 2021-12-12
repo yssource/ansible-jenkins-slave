@@ -71,9 +71,9 @@
 #  name: 'albanandrieu.jdiskreport'
 #  version: master
 
-- src: https://github.com/AlbanAndrieu/ansible-jenkins-slave.git
-  name: albanandrieu.jenkins_slave
-  version: master
+#- src: https://github.com/AlbanAndrieu/ansible-jenkins-slave.git
+#  name: albanandrieu.jenkins_slave
+#  version: master
 
 #- src: 'https://github.com/AlbanAndrieu/ansible-jenkins-swarm'
 #  name: 'albanandrieu.jenkins-swarm'
