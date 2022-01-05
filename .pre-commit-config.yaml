@@ -11,12 +11,12 @@ repos:
     -   id: check-docstring-first
     -   id: check-executables-have-shebangs
         exclude: >
-                  (?x)^(
-                      clean.bat|
-                      build.bat|
-                      mvnw.cmd|
-                      .mvn/
-                  )$
+          (?x)^(
+              clean.bat|
+              build.bat|
+              mvnw.cmd|
+              .mvn/
+          )$
     -   id: check-json
     -   id: check-xml
     -   id: check-yaml
@@ -29,17 +29,18 @@ repos:
     -   id: debug-statements
     -   id: detect-private-key
         exclude: >
-                  (?x)^(
-                      .ssh/id_rsa|
-                      roles/jenkins-master/defaults/main.yml|
-                      roles/jenkins-master/README.md|
-                  )$
+          (?x)^(
+              .ssh/id_rsa|
+              roles/jenkins-master/defaults/main.yml|
+              roles/jenkins-master/README.md|
+          )$
     -   id: double-quote-string-fixer
     -   id: name-tests-test
         exclude: >
-                  (?x)^(
-                      .*/molecule/default/tests/test_default.py|
-                  )$
+          (?x)^(
+              molecule/default/tests/.*|
+              .*test_default\.py|
+          )$
     -   id: no-commit-to-branch
         args: [--branch, develop, --branch, master, --branch, release/*]
     -   id: end-of-file-fixer
@@ -74,12 +75,12 @@ repos:
     -   id: ansible-lint
         files: \.(yaml|yml)$
         exclude: >
-                  (?x)^(
-                      .travis.yml|
-                      docker/|
-                      requirements.yml|
-                      playbooks/group_vars/all/vault.yml|
-                  )$
+          (?x)^(
+              .travis.yml|
+              docker/|
+              requirements.yml|
+              playbooks/group_vars/all/vault.yml|
+          )$
 -   repo: https://github.com/doublify/pre-commit-hindent.git
     rev: b3680b6ebf9f7cf29b19307f246adef66756feef
     hooks:
@@ -91,10 +92,10 @@ repos:
         #entry: pre_commit_hooks/shell-lint.sh -x
         args: [-x]
         exclude: >
-                  (?x)^(
-                      mvnw|
-                      hooks|
-                  )$
+          (?x)^(
+              mvnw|
+              hooks|
+          )$
 -   repo: https://github.com/asottile/pyupgrade
     rev: v2.29.1
     hooks:
@@ -119,8 +120,8 @@ repos:
     -   id: htmllint
     -   id: markdown-toc
         args: [--maxdepth, "3", -i]
-    -   id: dockerfile_lint
-        args: [--json, --verbose, --dockerfile]
+#    -   id: dockerfile_lint
+#        args: [--permissive, --verbose, --dockerfile, ./docker/ubuntu20/Dockerfile]
 -   repo: https://github.com/AlbanAndrieu/nabla-hooks.git
     rev: v1.0.3
     hooks:

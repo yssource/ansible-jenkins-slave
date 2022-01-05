@@ -135,8 +135,6 @@
   tags:
     - objc
 
-#- import_tasks: scons.yml
-
 - import_tasks: perl.yml
   tags:
     - perl

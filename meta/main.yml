@@ -3,7 +3,8 @@ dependencies:
   - { role: albanandrieu.ansible_common }
 #  - { role: geerlingguy.git }
 #  - { role: albanandrieu.cpp }
-#  - { role: albanandrieu.xvbf }
+#  - { role: albanandrieu.scons }
+  - { role: albanandrieu.xvbf }
   - { role: albanandrieu.selenium }
 #  - { role: maven }
 #  - { role: chrome }
@@ -23,6 +24,8 @@ dependencies:
 galaxy_info:
   author: Alban Andrieu
   description: A role for installing jenkins-slave
+  role_name: jenkins_slave
+  namespace: albanandrieu
   company: Nabla
   license: GPLv3
   min_ansible_version: 2.7.14

@@ -76,7 +76,7 @@ script:
   - ansible-playbook -i ./hosts --syntax-check ./jenkins-slave.yml -vvvv --connection=local -e "python_versions=[2.7, 3.5]" -e "jenkins_group=docker" -e "docker_gid=${DOCKER_GID}" -e "jenkins_id=${JENKINS_UID}" -e "python_enabled=false" --skip-tags restart
 
   # Molecule test
-   - molecule test
+  - molecule test
 
   # First run
   # Run the role/playbook with ansible-playbook.
